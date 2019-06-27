@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors Part</title>
+</head>
+
+<body>
+    <div id="game">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="jumbotron">
+                    <h2>Welcome to the Jam</h2>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p id="wins">Wins: </p>
+    <p id="losses">Lossed: </p>
+    <p id="gamesplayed">Games Played: </p>  
+
+
+
+
+
+<script type="text/javascript">
+    
+        var playAgain = "true";
+        var computerChoices = ["space", "jam", "slam" ];
+        var guess;
+
+        var loss = 0;
+        var win = 0;
+        var gamesPlayed = 0;
+
+        var validGuess = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        var word = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        var remainingLetters = word.length;
+        var answerArray = [];
+        for (var i = 0; i < word.length; i++) {
+            answerArray[i] = "_";
+        }
+
+        document.onkeyup = function (event) { //onkeyup covers the loop and avoids need for a prompt
+            var userGuess = event.key;
+
+            alert("User guess: " + userGuess);
+            alert("Computer guess: " + word);
+            console.log(word.length);
+
+
+            if (word.indexOf(userGuess) != -1) {        //checks if the userGuess is inside word
+                for (var i = 0; i < word.length; i++) { //loops all characters
+                    if (word.charAt(i) == userGuess) {
+                        answerArray[i] = userGuess;
+                        remainingLetters--;
+
+                        console.log(answerArray[i]);
+                        console.log(remainingLetters);
+                    }
+                }
+            } else {
+                alert("Incorrect or Invalid!");
+            }
+
+            if (remainingLetters == 0) {
+                alert("You Win!");
+                win++;
+                gamesPlayed++;
+            }
+
+
+
+
+
+
+        }
+
+
+
+        
+        console.log("Wins: " + win);
+        console.log("Losses: " + loss);
+        console.log("Total Games: " + gamesPlayed);
+
+
+        document.getElementById("wins").innerHTML = "Wins: " + win;
+        document.getElementById("losses").innerHTML = "Losses: " + loss;
+        document.getElementById("gamesplayed").innerHTML = "Games Played: " + gamesPlayed;
+
+
+
+    </script>
+
+    
+</body>
+
+
+</html>
