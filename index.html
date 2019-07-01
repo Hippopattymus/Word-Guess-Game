@@ -12,12 +12,14 @@
 
     <!-- Added a link to our external stylesheet-->
     <link rel="stylesheet" href="assets/css/style.css">
+
+
 </head>
 
 <body>
     <div id="game" class="container">
         <div class="row">
-            <div class="col-md-12">  
+            <div class="col-md-12 logo pt-3">  
                 <img src="https://seeklogo.com/images/S/space-jam-logo-168E69A11F-seeklogo.com.jpg" height=250px width = 100%></a>
             </div>
             
@@ -46,7 +48,7 @@
         const maxTries= 10;
         var remainingGuesses;
         var computerChoices = ["space", "jam", "slam", "monstars", 'daffy', 'bugs', "bunny", "looney", "tunes", "nerdlucks",
-                                "squad", "marvin", "yosemite"];
+                                "squad", "marvin", "yosemite", "basketball"];
 
 
         var win = 0;
@@ -84,7 +86,7 @@
         
             
             console.log(word.length);
-            if (finished == true && win != 0){ 
+            if (finished == true && gamesPlayed != 0){ 
                 reset();
                 finished = false;
             }
@@ -135,6 +137,7 @@
                 alert("Game Over");
                 alert("Press Any Key To Try Again");
                 finished = true;
+                gamesPlayed++;
             }
         };
     </script>    
