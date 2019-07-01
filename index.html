@@ -4,101 +4,139 @@
 <head>
     <meta charset="UTF-8">
     <title>Rock Paper Scissors Part</title>
+    <!-- Added link to the jQuery Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Added a link to Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- Added a link to our external stylesheet-->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
-    <div id="game">
+    <div id="game" class="container">
         <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-                <div class="jumbotron">
-                    <h2>Welcome to the Jam</h2>
-
-
-
-                </div>
+            <div class="col-md-12">  
+                <img src="https://seeklogo.com/images/S/space-jam-logo-168E69A11F-seeklogo.com.jpg" height=250px width = 100%></a>
+            </div>
+            
+            <div id="currentWord" class="col-md-6 pt-5" > </div>
+            <div class="col-md-6 pt-5">
+                <p id = "remainingGuesses"></p>
+                <p id = "gamesPlayed"></p>
+                <p id = "totalWins"></p>
+                <p id = "guessedLetters"></p>
             </div>
         </div>
     </div>
 
-    <p id="wins">Wins: </p>
-    <p id="losses">Lossed: </p>
-    <p id="gamesplayed">Games Played: </p>  
+
+    
 
 
 
 
 
 <script type="text/javascript">
-    
+        var finished = false;
         var playAgain = "true";
-        var computerChoices = ["space", "jam", "slam" ];
-        var guess;
+        
+        var userGuess;
+        const maxTries= 10;
+        var remainingGuesses;
+        var computerChoices = ["space", "jam", "slam", "monstars", 'daffy', 'bugs', "bunny", "looney", "tunes", "nerdlucks",
+                                "squad", "marvin", "yosemite"];
 
-        var loss = 0;
+
         var win = 0;
         var gamesPlayed = 0;
 
-        var validGuess = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-        var word = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-        var remainingLetters = word.length;
+        var word;
+        var remainingLetters;
         var answerArray = [];
-        for (var i = 0; i < word.length; i++) {
-            answerArray[i] = "_";
-        }
+        var guessedLetters = [];
+        
+        
+        function reset() {
+            remainingGuesses = maxTries;
 
-        document.onkeyup = function (event) { //onkeyup covers the loop and avoids need for a prompt
-            var userGuess = event.key;
+            word = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+            console.log("Resetting Game");
+            console.log(word);
+            remainingLetters = word.length;
 
-            alert("User guess: " + userGuess);
-            alert("Computer guess: " + word);
-            console.log(word.length);
+            guessedLetters = [];
+            answerArray = [];
 
-
-            if (word.indexOf(userGuess) != -1) {        //checks if the userGuess is inside word
-                for (var i = 0; i < word.length; i++) { //loops all characters
-                    if (word.charAt(i) == userGuess) {
-                        answerArray[i] = userGuess;
-                        remainingLetters--;
-
-                        console.log(answerArray[i]);
-                        console.log(remainingLetters);
-                    }
-                }
-            } else {
-                alert("Incorrect or Invalid!");
+            for (var i = 0; i < word.length; i++) {
+                console.log(word.length);
+                answerArray.push("_");
             }
-
-            if (remainingLetters == 0) {
-                alert("You Win!");
-                win++;
-                gamesPlayed++;
-            }
-
-
-
-
-
-
-        }
-
-
+            updateDisplay();
+        };
+        
 
         
-        console.log("Wins: " + win);
-        console.log("Losses: " + loss);
-        console.log("Total Games: " + gamesPlayed);
+        reset(); //initial reset/initialization
+        document.onkeyup = function (event) { //
+            userGuess = event.key;
+        
+            
+            console.log(word.length);
+            if (finished == true && win != 0){ 
+                reset();
+                finished = false;
+            }
+            else{ 
+                if (event.keyCode >= 65 && event.keyCode <= 90){
+                    if (word.indexOf(userGuess) != -1) {        //checks if the userGuess is inside word
+                        for (var i = 0; i < word.length; i++) { //loops all characters
+                            if (word.charAt(i) == userGuess && word.charAt(i) != answerArray[i]) {
+                            answerArray[i] = userGuess;
+                            remainingLetters--;
+                            
+                            
+                         }
+                        }
+                    } 
+                    else if (guessedLetters.indexOf(userGuess) === -1) {
+                    guessedLetters.push(userGuess);
+                
+                    remainingGuesses--;
+            
+                }
+                updateDisplay();
+                }   
+            }
+            if (remainingLetters == 0) {
+                alert("You Win!");
+                alert("Press Any Key To Reset");
+                win++;
+                gamesPlayed++;
+                finished = true;
+            }
+            
+        };
 
+        function checkWin(){ 
 
-        document.getElementById("wins").innerHTML = "Wins: " + win;
-        document.getElementById("losses").innerHTML = "Losses: " + loss;
-        document.getElementById("gamesplayed").innerHTML = "Games Played: " + gamesPlayed;
-
-
-
-    </script>
-
-    
+        }
+        function updateDisplay() {
+            document.getElementById("totalWins").innerHTML = "Wins: " + win;
+            document.getElementById("currentWord").innerText =" ";
+            for (var i = 0; i < answerArray.length; i++) {
+                document.getElementById("currentWord").append(answerArray[i]);
+            }
+            document.getElementById("remainingGuesses").innerText = "Remaining Guesses: " + remainingGuesses;
+            console.log(guessedLetters);
+            document.getElementById("guessedLetters").innerHTML = "Incorrect Guesses: " + guessedLetters;
+            if (remainingGuesses <= 0) {
+                alert("Game Over");
+                alert("Press Any Key To Try Again");
+                finished = true;
+            }
+        };
+    </script>    
 </body>
-
-
 </html>
