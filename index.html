@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Rock Paper Scissors Part</title>
+    <title>Space Jam Hangman</title>
     <!-- Added link to the jQuery Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -13,17 +13,23 @@
     <!-- Added a link to our external stylesheet-->
     <link rel="stylesheet" href="assets/css/style.css">
 
+    
+
 
 </head>
 
 <body>
+
     <div id="game" class="container">
         <div class="row">
             <div class="col-md-12 logo pt-3">  
-                <img src="https://seeklogo.com/images/S/space-jam-logo-168E69A11F-seeklogo.com.jpg" height=250px width = 100%></a>
+                <img src="assets/images/spacejam.jpg" height=250px width = 100%></a>
+                
             </div>
             
-            <div id="currentWord" class="col-md-6 pt-5" > </div>
+            <div id="currentWord" class="col-md-6 pt-5" >  
+                
+            </div>
             <div class="col-md-6 pt-5">
                 <p id = "remainingGuesses"></p>
                 <p id = "gamesPlayed"></p>
@@ -33,113 +39,8 @@
         </div>
     </div>
 
-
     
-
-
-
-
-
-<script type="text/javascript">
-        var finished = false;
-        var playAgain = "true";
-        
-        var userGuess;
-        const maxTries= 10;
-        var remainingGuesses;
-        var computerChoices = ["space", "jam", "slam", "monstars", 'daffy', 'bugs', "bunny", "looney", "tunes", "nerdlucks",
-                                "squad", "marvin", "yosemite", "basketball"];
-
-
-        var win = 0;
-        var gamesPlayed = 0;
-
-        var word;
-        var remainingLetters;
-        var answerArray = [];
-        var guessedLetters = [];
-        
-        
-        function reset() {
-            remainingGuesses = maxTries;
-
-            word = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-            console.log("Resetting Game");
-            console.log(word);
-            remainingLetters = word.length;
-
-            guessedLetters = [];
-            answerArray = [];
-
-            for (var i = 0; i < word.length; i++) {
-                console.log(word.length);
-                answerArray.push("_");
-            }
-            updateDisplay();
-        };
-        
-
-        
-        reset(); //initial reset/initialization
-        document.onkeyup = function (event) { //
-            userGuess = event.key;
-        
-            
-            console.log(word.length);
-            if (finished == true && gamesPlayed != 0){ 
-                reset();
-                finished = false;
-            }
-            else{ 
-                if (event.keyCode >= 65 && event.keyCode <= 90){
-                    if (word.indexOf(userGuess) != -1) {        //checks if the userGuess is inside word
-                        for (var i = 0; i < word.length; i++) { //loops all characters
-                            if (word.charAt(i) == userGuess && word.charAt(i) != answerArray[i]) {
-                            answerArray[i] = userGuess;
-                            remainingLetters--;
-                            
-                            
-                         }
-                        }
-                    } 
-                    else if (guessedLetters.indexOf(userGuess) === -1) {
-                    guessedLetters.push(userGuess);
-                
-                    remainingGuesses--;
-            
-                }
-                updateDisplay();
-                }   
-            }
-            if (remainingLetters == 0) {
-                alert("You Win!");
-                alert("Press Any Key To Reset");
-                win++;
-                gamesPlayed++;
-                finished = true;
-            }
-            
-        };
-
-        function checkWin(){ 
-
-        }
-        function updateDisplay() {
-            document.getElementById("totalWins").innerHTML = "Wins: " + win;
-            document.getElementById("currentWord").innerText =" ";
-            for (var i = 0; i < answerArray.length; i++) {
-                document.getElementById("currentWord").append(answerArray[i]);
-            }
-            document.getElementById("remainingGuesses").innerText = "Remaining Guesses: " + remainingGuesses;
-            console.log(guessedLetters);
-            document.getElementById("guessedLetters").innerHTML = "Incorrect Guesses: " + guessedLetters;
-            if (remainingGuesses <= 0) {
-                alert("Game Over");
-                alert("Press Any Key To Try Again");
-                finished = true;
-                gamesPlayed++;
-            }
-        };
-    </script>    
 </body>
+
+<script src="assets/javascript/game.js"></script>
 </html>
